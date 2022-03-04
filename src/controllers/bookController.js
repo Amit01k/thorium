@@ -42,6 +42,13 @@ const deleteBooks= async function (req, res) {
      res.send( { msg: allBooks})
 }
 
+const basic=async function(req,res){
+    
+    
+    res.send("this is from bookcontroller basic api")
+}
+
+module.exports.basic=basic
 
 
 
