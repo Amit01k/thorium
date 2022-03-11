@@ -7,13 +7,13 @@ const createUser = async function (req, res) {
   //the second parameter is always the response
   try{
   let data = req.body;
-  let savedData = await userModel.create(data);
+  let savedData = await userModel.create(data);          //remember if and else condition 
   console.log(req.newAtribute);
-  res.status(201).send({ msg: savedData });
+  res.status(201).send({ msg: savedData });//created
   }
   catch(err){
     console.log("here is error",err.message)
-    res.status(500).send({msg:"error",error:err.message})
+    res.status(500).send({msg:"error",error:err.message})//server error
     
   }
 };
@@ -45,11 +45,11 @@ const loginUser = async function (req, res) {
     "functionup-thorium"
   );
   res.setHeader("x-auth-token", token);
-  res.status(200).send({ status: true, data: token });
+  res.status(200).send({ status: true, data: token });//ok
   }
   catch(err){
     console.log("here is error",err.message)
-    res.status(500).send({msg:"error",error:err.message})
+    res.status(404).send({msg:"error",error:err.message})//method not found
 
   }
 };
@@ -73,16 +73,16 @@ const getUserData = async function (req, res) {
   if (!decodedToken)
     return res.send({ status: false, msg: "token is invalid" });
 
-  let erId = req.params.userId;
+  let userId = req.params.userId;
   let userDetails = await userModel.findById(userId);
   if (!userDetails)
     return res.send({ status: false, msg: "No such user exists" });
 
-  res.status(200).send({ status: true, data: userDetails });
+  res.status(202).send({ status: true, data: userDetails });//accept
   }
   catch(err){
     console.log("error",err.message)
-    res.status(500).send({msg:"error",error:err.message})
+    res.status(401).send({msg:"error",error:err.message})//unauthorized
   }
 };
 
@@ -101,11 +101,11 @@ const updateUser = async function (req, res) {
 
   let userData = req.body;
   let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData);
-  res.send({ status: updatedUser, data: updatedUser });
+  res.status(200).send({ status: updatedUser, data: updatedUser });//ok
 }
 catch(err){
   console.log("error",err.message)
-  res.status(500).send({msg:"error",error:err.message})
+  res.status(401).send({msg:"error",error:err.message})//unatuhorized
 }
 };
 
@@ -138,11 +138,11 @@ const postMessage = async function (req, res) {
     let updatedUser = await userModel.findOneAndUpdate({_id: user._id},{posts: updatedPosts}, {new: true})
 
     //return the updated user document
-    return res.send({status: true, data: updatedUser})
+    return res.status(202).send({status: true, data: updatedUser})//accept
   }
   catch(err){
     console.log("error",err.message)
-    res.status(500).send({msg:"error",error:err.message})
+    res.status(500).send({msg:"error",error:err.message})//internat server error
   }
 }
 
