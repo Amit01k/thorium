@@ -16,11 +16,11 @@ const blogSchema = new mongoose.Schema( {
         required : true
     } ,
     tages :  [ String ] ,
-    catagory : {
+    category : {
         type : String ,
         required : true 
     }, 
-    subcatagory : [ String ] ,
+    subcategory : [ String ] ,
     isDeleted : {
         type : Boolean ,
         default : false
